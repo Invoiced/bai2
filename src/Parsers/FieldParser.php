@@ -30,7 +30,7 @@ class FieldParser
     {
         $this->constraint = function () use ($constraint, $violationMessage) {
             if (preg_match($constraint, $this->value) !== 1) {
-                $this->throw(" {$violationMessage}.");
+                $this->throw(" {$violationMessage}. Value: ".$this->value);
             }
         };
 

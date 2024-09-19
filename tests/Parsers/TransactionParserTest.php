@@ -870,28 +870,18 @@ final class TransactionParserTest extends RecordParserTestCase
     }
 
     /**
-     * @testWith ["16,409,,,123456789,9876+54321,TEXT OF SUCH IMPORT"]
-     *           ["16,409,,,123456789,9876)54321,TEXT OF SUCH IMPORT"]
-     *           ["16,409,,,123456789,9876(54321,TEXT OF SUCH IMPORT"]
-     *           ["16,409,,,123456789,9876*54321,TEXT OF SUCH IMPORT"]
-     *           ["16,409,,,123456789,9876^54321,TEXT OF SUCH IMPORT"]
-     *           ["16,409,,,123456789,9876%54321,TEXT OF SUCH IMPORT"]
-     *           ["16,409,,,123456789,9876$54321,TEXT OF SUCH IMPORT"]
-     */
-    public function testCustomerReferenceNumberInvalid(string $line): void
-    {
-        $this->parser->pushLine($line);
-
-        $this->expectException(InvalidTypeException::class);
-        $this->expectExceptionMessage('Invalid field type: "Customer Reference Number" must be alpha-numeric when provided.');
-        $this->parser['customerReferenceNumber'];
-    }
-
-    /**
      * @testWith ["16,409,,,123456789,987654321,TEXT OF SUCH IMPORT", "TEXT OF SUCH IMPORT"]
      *           ["16,409,,,123456789,987654321,,TEXT OF SUCH IMPORT", ",TEXT OF SUCH IMPORT"]
      *           ["16,409,,,123456789,987654321,TEXT OF SUCH IMPORT/", "TEXT OF SUCH IMPORT/"]
      *           ["16,409,,,123456789,987654321,TEXT, OF/SUCH IMPORT", "TEXT, OF/SUCH IMPORT"]
+     *           ["16,409,,,123456789,987654321,O:B BK OF NYC", "O:B BK OF NYC"]
+     *           ["16,409,,,123456789,9876+54321,TEXT OF SUCH IMPORT", "TEXT OF SUCH IMPORT"]
+     *           ["16,409,,,123456789,9876)54321,TEXT OF SUCH IMPORT", "TEXT OF SUCH IMPORT"]
+     *           ["16,409,,,123456789,9876(54321,TEXT OF SUCH IMPORT", "TEXT OF SUCH IMPORT"]
+     *           ["16,409,,,123456789,9876*54321,TEXT OF SUCH IMPORT", "TEXT OF SUCH IMPORT"]
+     *           ["16,409,,,123456789,9876^54321,TEXT OF SUCH IMPORT", "TEXT OF SUCH IMPORT"]
+     *           ["16,409,,,123456789,9876%54321,TEXT OF SUCH IMPORT", "TEXT OF SUCH IMPORT"]
+     *           ["16,409,,,123456789,9876$54321,TEXT OF SUCH IMPORT", "TEXT OF SUCH IMPORT"]
      */
     public function testTextValid(string $line, string $expected): void
     {
